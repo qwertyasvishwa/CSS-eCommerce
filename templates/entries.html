@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+  <h3>Entries</h3>
+  <form method="get">
+    <div class="row">
+      <div class="column">
+        <input name="q" placeholder="Search text" value="{{ q }}" />
+      </div>
+      <div class="column">
+        <input name="tag" placeholder="Tag" value="{{ tag }}" />
+      </div>
+      <div class="column">
+        <input name="start" placeholder="Start (YYYY-MM-DD or ISO)" value="{{ start }}" />
+      </div>
+      <div class="column">
+        <input name="end" placeholder="End (YYYY-MM-DD or ISO)" value="{{ end }}" />
+      </div>
+      <div class="column">
+        <button type="submit">Filter</button>
+      </div>
+    </div>
+  </form>
+
+  {% for e in entries %}
+    <div class="entry-card">
+      <div class="meta">
+        {{ e.created_at.strftime('%Y-%m-%d %H:%M') }}
+        {% if e.model %} · {{ e.model }}{% endif %}
+        {% if e.tags %} · {{ e.tags }}{% endif %}
+        · <a href="/entry/{{ e.id }}">Open</a>
+      </div>
+      <details>
+        <summary><strong>Prompt</strong></summary>
+        <pre>{{ e.prompt }}</pre>
+      </details>
+      <details open>
+        <summary><strong>Response</strong></summary>
+        <pre>{{ e.response }}</pre>
+      </details>
+    </div>
+  {% else %}
+    <p>No entries found.</p>
+  {% endfor %}
+</section>
+{% endblock %}
+

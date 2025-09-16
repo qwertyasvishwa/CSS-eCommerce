@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+  <h3>Add Entry</h3>
+  <form action="/add" method="post">
+    <div class="row">
+      <div class="column">
+        <label for="prompt">Prompt</label>
+        <textarea id="prompt" name="prompt" required placeholder="Your prompt..."></textarea>
+      </div>
+      <div class="column">
+        <label for="response">Response</label>
+        <textarea id="response" name="response" required placeholder="The AI response..."></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column">
+        <label for="model">Model (optional)</label>
+        <input id="model" name="model" placeholder="gpt-4o, o3, etc" />
+      </div>
+      <div class="column">
+        <label for="tags">Tags (comma separated)</label>
+        <input id="tags" name="tags" placeholder="work, research" />
+      </div>
+    </div>
+    <button type="submit">Save</button>
+  </form>
+</section>
+
+<section>
+  <h3>Recent</h3>
+  {% for e in recent %}
+    <div class="entry-card">
+      <div class="meta">
+        {{ e.created_at.strftime('%Y-%m-%d %H:%M') }}
+        {% if e.model %} · {{ e.model }}{% endif %}
+        {% if e.tags %} · {{ e.tags }}{% endif %}
+      </div>
+      <strong>Prompt</strong>
+      <pre>{{ e.prompt }}</pre>
+      <strong>Response</strong>
+      <pre>{{ e.response }}</pre>
+      <a href="/entry/{{ e.id }}">Open</a>
+    </div>
+  {% else %}
+    <p>No entries yet.</p>
+  {% endfor %}
+</section>
+{% endblock %}
+

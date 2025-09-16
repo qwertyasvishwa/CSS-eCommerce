@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<article>
+  <h3>Entry #{{ entry.id }}</h3>
+  <div class="meta">
+    {{ entry.created_at.strftime('%Y-%m-%d %H:%M') }}
+    {% if entry.model %} · {{ entry.model }}{% endif %}
+    {% if entry.tags %} · {{ entry.tags }}{% endif %}
+  </div>
+  <h4>Prompt</h4>
+  <pre>{{ entry.prompt }}</pre>
+  <h4>Response</h4>
+  <pre>{{ entry.response }}</pre>
+  <a href="/entries">Back</a>
+</article>
+{% endblock %}
+

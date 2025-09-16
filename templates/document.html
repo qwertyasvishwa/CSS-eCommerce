@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+  <h3>Long Document</h3>
+  {% for e in entries %}
+    <div class="entry-card">
+      <div class="meta">{{ e.created_at.strftime('%Y-%m-%d %H:%M') }}{% if e.model %} · {{ e.model }}{% endif %}{% if e.tags %} · {{ e.tags }}{% endif %}</div>
+      <strong>Prompt</strong>
+      <pre>{{ e.prompt }}</pre>
+      <strong>Response</strong>
+      <pre>{{ e.response }}</pre>
+    </div>
+  {% else %}
+    <p>No entries yet.</p>
+  {% endfor %}
+</section>
+{% endblock %}
+
